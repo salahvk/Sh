@@ -11,6 +11,8 @@ var db=require('./config/connection')
 
 
 var app = express();
+process.env.PWD = process.cwd()
+app.use(express.static(process.env.PWD + '/public/product-images'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
