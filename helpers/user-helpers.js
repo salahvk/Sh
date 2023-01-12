@@ -24,13 +24,18 @@ return new Promise(async(resolve,reject)=>{
         bcrypt.compare(userData.Password,user.Password).then((status)=>{
             if(status){
                console.log("Login Success") 
+               response.user = user;
+               response.status = true;
+               resolve(response);
             }else{
                 console.log("Login Failed1") 
+                resolve({status:false})
             }
         })
     }else{
         console.log("Login Failed2") 
         console.log(userData.Email)
+        resolve({status:false})
     }
 });
     }
