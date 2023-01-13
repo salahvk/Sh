@@ -4,13 +4,13 @@ const bcrypt=require('bcrypt')
 module.exports={
     doSignup:(userData)=>{
         return new Promise(async(resolve, reject) =>{
-            console.log(userData.Password);
+            // console.log(userData.Password);
             userData.Password =await bcrypt.hash(userData.Password,10)
             db.get().collection(collection.USER_COLLECTION).insertOne(userData).then((data)=>{
                 userData._id = data.insertedId;
                 resolve(userData._id);
             })
-            console.log(userData.Password)
+            // console.log(userData.Password)
         })
 
     }

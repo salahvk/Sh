@@ -9,6 +9,9 @@ var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
 var fileUpload = require('express-fileupload')
 var db=require('./config/connection')
+// const redis = require('redis');
+// const redisStore = require('connect-redis')(session);
+// const client  = redis.createClient();
 
 
 var app = express();
@@ -25,10 +28,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileUpload())
-app.use(session({secret: 'keyboard cat',
-resave: false,
-saveUninitialized: true,
-cookie: { secure: true ,maxAge:600000}}))
+
+app.use(session({
+  secret: 'key',
+
+  // cookie: { secure: true ,maxAge:600000},
+  saveUninitialized: true,
+  resave: true
+}));
 db.connect((err)=>{
   if(err) console.log("Connection error");
   else console.log("Database connected");
