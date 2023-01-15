@@ -12,6 +12,9 @@
           <div class="card-body p-4 p-sm-5">
             <h5 class="card-title text-center mb-5 fw-light fs-5">Sign In</h5>
                  <form action="/login" method="post">
+                 {{#if loginErr}}
+                 <p class="error"> Invalid UserName or Password</p>
+{{/if}}
               <div class="form-floating mb-3">
                 <input type="email" class="form-control" id="floatingInput"  name="Email" placeholder="name@example.com">
                 <label for="floatingInput">Email address</label>

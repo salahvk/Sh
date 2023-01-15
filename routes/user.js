@@ -3,6 +3,13 @@ var express = require('express');
 var router = express.Router();
 var productHelper = require('../helpers/product-helpers')
 const userHelpers = require('../helpers/user-helpers')
+const verifyLogin = (req, res,next) => {
+  if(req.session.loggedIn){
+next()
+  }else{
+    res.redirect('/login')
+  }
+}
 
 
 /* GET home page. */
@@ -19,9 +26,16 @@ router.get('/', function (req, res) {
 
 router.get('/login', function (req, res) {
   let user = req.session.user
-  console.log(user)
-  console.log(req.session.loggedIn);
-  res.render('user/login')
+  if(req.session.loggedIn){
+res.redirect('/')
+  }
+else{
+
+  res.render('user/login',{"loginErr" :req.session.loginErr})
+  req.session.loginErr =false;
+}
+  
+  
 })
 
 
@@ -30,10 +44,12 @@ router.post('/login', function (req, res) {
   userHelpers.doLogin(req.body).then((response) => {
     if (response.status) {        
       req.session.user = response.user
+      req.session.loggedIn = true;
       req.session.save();
       res.redirect('/')
 
     } else {
+      req.session.loginErr = true;
       res.redirect('/login')
     }
   })
@@ -57,5 +73,12 @@ router.get('/logout', function (req, res) {
   // res.render('/')
   res.redirect('/')
 })
+
+ 
+router.get('/cart',verifyLogin, function (req, res) {
+  res.render('user/cart');
+})
+
+
 
 module.exports = router;

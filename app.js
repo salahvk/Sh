@@ -9,14 +9,14 @@ var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
 var fileUpload = require('express-fileupload')
 var db=require('./config/connection')
-// const redis = require('redis');
-// const redisStore = require('connect-redis')(session);
-// const client  = redis.createClient();
+var nocache=require("nocache");
+
 
 
 var app = express();
 process.env.PWD = process.cwd()
 app.use(express.static(process.env.PWD + '/public/product-images'));
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -36,6 +36,7 @@ app.use(session({
   saveUninitialized: true,
   resave: true
 }));
+app.use(nocache ());
 db.connect((err)=>{
   if(err) console.log("Connection error");
   else console.log("Database connected");
