@@ -41,4 +41,11 @@ productHelper.deleteProduct(proId).then((response)=>{
 })
 })
 
+router.get('/edit-product/:id',(req,res)=>{
+  let proId = req.params.id
+  console.log (proId);
+  productHelper.getProductDetails(proId).then((response)=>{
+    res.redirect('/admin/edit-product/',{response})
+  })
+  })
 module.exports = router;
