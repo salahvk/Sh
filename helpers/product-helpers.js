@@ -1,19 +1,19 @@
-var db =require("../config/connection")
-var collection =require("../config/collections")
+var db = require("../config/connection")
+var collection = require("../config/collections")
 var objectId = require("mongodb").ObjectId
 
-module.exports={
-    addProduct:(product,callback)=>{
+module.exports = {
+    addProduct: (product, callback) => {
         // console.log(product);
-        db.get().collection('product').insertOne(product).then((data)=>{
+        db.get().collection('product').insertOne(product).then((data) => {
             // callback(data)
             // console.log(data)
             // console.log(data.insertedId)
             callback(data.insertedId)
         }
         )
-    },getAllProducts:()=>{
-        return new Promise(async (resolve,reject)=>{
+    }, getAllProducts: () => {
+        return new Promise(async (resolve, reject) => {
             let products = await db.get().collection(collection.PRODUCT_COLLECTION).find().toArray()
             // console.log(products._id)
             // console.log(products)
@@ -21,20 +21,38 @@ module.exports={
 
         })
     },
-    deleteProduct:(prodId)=>{
-return new Promise((resolve, reject) =>{
-    db.get().collection(collection.PRODUCT_COLLECTION).deleteOne({_id:objectId(prodId)}).then((response) =>{
-        console.log(response);
-        resolve(response)
-    })
-})
-    },
-    getProductDetails:(prodId)=>{
-        return new Promise((resolve, reject) =>{
-            db.get().collection(collection.PRODUCT_COLLECTION).findOne({_id:objectId(prodId)}).then((response) =>{
+    deleteProduct: (prodId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.PRODUCT_COLLECTION).deleteOne({ _id: objectId(prodId) }).then((response) => {
                 console.log(response);
                 resolve(response)
             })
+        })
+    },
+    getProductDetails: (prodId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.PRODUCT_COLLECTION).findOne({ _id: objectId(prodId) }).then((response) => {
+                console.log(response);
+                resolve(response)
+            })
+        })
+    },
+    updateProduct: (prodId, product) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.PRODUCT_COLLECTION).updateOne({
+                _id: objectId(prodId
+                )
+            }, {
+                $set: {
+                    Name: product.Name,
+                    Description: product.Description,
+                    Price: product.Price,
+                    Category: product.Category,
+                    // Image:product.Image,
+                }
+            }).then((response) => {
+            resolve()}
+                )
         })
     }
 }
