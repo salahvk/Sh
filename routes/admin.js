@@ -60,7 +60,5 @@ router.post('/edit-product/:id', (req, res) => {
 
 })
 
-router.get('/add-to-cart/:id',(req,res)=>{
 
-})
 module.exports = router;
