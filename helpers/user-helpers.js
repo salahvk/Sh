@@ -54,16 +54,16 @@ module.exports = {
                     ).then((response) => {
                         resolve()
                     })
-                } else { 
+                } else {
                     let cartObject = {
                         user: ObjectID(userId),
-                        products:[ ObjectID(proId)]
+                        products: [ObjectID(proId)]
                     }
                     db.get().collection(collection.CART_COLLECTION).insertOne(cartObject).then((response) => {
                         resolve(response)
                     })
                 }
-            } 
+            }
         )
     }, getCartProducts: (userId) => {
         return new Promise(async (resolve, reject) => {
@@ -77,11 +77,21 @@ module.exports = {
                                 $in: ['$_id', '$$prodList']
                             }
                         }
-                    }],   as: 'cartItems'
+                    }], as: 'cartItems'
                 }
-             
+
             }]).toArray()
-            resolve(cartItems[0].cartItems) 
+            resolve(cartItems[0].cartItems)
+        })
+    },
+    getCartCount: (userId) => {
+        return new Promise(async (resolve, reject) => {
+            let count = 0
+            let cart = await db.get().collection(collection.CART_COLLECTION).findOne({ user: ObjectID(userId) })
+            if (cart) {
+                count = cart.products.length
+            }
+            resolve(count)
         })
     }
 } 

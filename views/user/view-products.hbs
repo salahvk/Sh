@@ -9,7 +9,8 @@
                         <div class="card-body">
                             <h5 class="card-title">{{this.Name}}</h5>
                             <p class="card-text">{{this.Description}}.</p>
-                            <a href="/add-to-cart/{{this._id}}" class="btn btn-primary">Add to Cart</a>
+                            {{!-- <a href="/add-to-cart/{{this._id}}" class="btn btn-primary">Add to Cart</a> --}}
+                            <button onclick="hello()" class="btn btn-primary">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -17,3 +18,9 @@
             </div>
         </div>
     </section>
+
+<script>
+    function hello2(){
+        console.log("hello 2")
+    }
+</script>
