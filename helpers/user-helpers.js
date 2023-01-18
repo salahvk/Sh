@@ -24,18 +24,18 @@ module.exports = {
             if (user) {
                 bcrypt.compare(userData.Password, user.Password).then((status) => {
                     if (status) {
-                        console.log("Login Success")
+                        // console.log("Login Success")
                         response.user = user;
                         response.status = true;
                         resolve(response);
                     } else {
-                        console.log("Login Failed1")
+                        // console.log("Login Failed1")
                         resolve({ status: false })
                     }
                 })
             } else {
-                console.log("Login Failed2")
-                console.log(userData.Email)
+                // console.log("Login Failed2")
+                // console.log(userData.Email)
                 resolve({ status: false })
             }
         });
@@ -51,31 +51,37 @@ module.exports = {
                         }, {
                         $push: { products: ObjectID(proId) }
                     }
-                    ).then(() => {
+                    ).then((response) => {
                         resolve()
                     })
-                } else {
+                } else { 
                     let cartObject = {
                         user: ObjectID(userId),
-                        products: ObjectID(proId)
+                        products:[ ObjectID(proId)]
                     }
-                    db.get().collection(collection.CART_COLLECTION).insertOne(cartObject).then(() => {
-                        resolve()
+                    db.get().collection(collection.CART_COLLECTION).insertOne(cartObject).then((response) => {
+                        resolve(response)
                     })
                 }
-            }
+            } 
         )
-    }, getCartProducts: () => {
+    }, getCartProducts: (userId) => {
         return new Promise(async (resolve, reject) => {
             let cartItems = await db.get().collection(collection.CART_COLLECTION).aggregate([{ $match: { user: ObjectID(userId) } }, {
-$lookup:{
-   from: 'products',
-   let:{proList:'$products'},
-   pipeline:[{
-    $match
-   }]
-}
-            }])
+                $lookup: {
+                    from: collection.PRODUCT_COLLECTION,
+                    let: { prodList: '$products' },
+                    pipeline: [{
+                        $match: {
+                            $expr: {
+                                $in: ['$_id', '$$prodList']
+                            }
+                        }
+                    }],   as: 'cartItems'
+                }
+             
+            }]).toArray()
+            resolve(cartItems[0].cartItems) 
         })
     }
 } 

@@ -24,7 +24,7 @@ module.exports = {
     deleteProduct: (prodId) => {
         return new Promise((resolve, reject) => {
             db.get().collection(collection.PRODUCT_COLLECTION).deleteOne({ _id: objectId(prodId) }).then((response) => {
-                console.log(response);
+                // console.log(response);
                 resolve(response)
             })
         })
@@ -32,7 +32,7 @@ module.exports = {
     getProductDetails: (prodId) => {
         return new Promise((resolve, reject) => {
             db.get().collection(collection.PRODUCT_COLLECTION).findOne({ _id: objectId(prodId) }).then((response) => {
-                console.log(response);
+                // console.log(response);
                 resolve(response)
             })
         })

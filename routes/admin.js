@@ -24,8 +24,8 @@ router.post('/add-product', function (req, res) {
         res.render("admin/view-products")
         // res.render('admin/add-products')
       } else {
-        console.log(err)
-        console.log('error occured');
+        // console.log(err)
+        // console.log('error occured');
 
       }
     })
@@ -35,7 +35,7 @@ router.post('/add-product', function (req, res) {
 
 router.get('/delete-product/:id', (req, res) => {
   let proId = req.params.id
-  console.log(proId);
+  // console.log(proId);
   productHelper.deleteProduct(proId).then((response) => {
     res.redirect('/admin')
   })

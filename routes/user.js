@@ -15,7 +15,7 @@ next()
 /* GET home page. */
 router.get('/', function (req, res) {
   let user = req.session.user;
-  console.log(req.session.user);
+  // console.log(req.session.user);
   
   productHelper.getAllProducts().then((products) => {
     res.render('user/view-products', { admin: false, products ,user});
@@ -61,7 +61,7 @@ router.get('/signup', function (req, res) {
 
 router.post('/signup', function (req, res) {
   userHelpers.doSignup(req.body).then((response) => {
-    console.log(response)
+    // console.log(response)
     req.session.user = response
     req.session.loggedIn = true;
     req.session.save();
@@ -78,14 +78,17 @@ router.get('/logout', function (req, res) {
 })
 
  
-router.get('/cart', function (req, res) {
-  res.render('user/cart');
+router.get('/cart',verifyLogin,  async(req, res) =>{
+  let products =await userHelpers.getCartProducts(req.session.user._id)
+console.log(products)
+  res.render('user/cart',{products});
 })
 
 router.get('/add-to-cart/:id',verifyLogin,(req,res)=>{
   let userId = req.session.user._id;
-userHelpers.addToCart(req.params.id,userId).then(()=>{
+userHelpers.addToCart(req.params.id,userId).then((response)=>{
   res.redirect('/')
+  // console.log(response)
 })
 })
 
