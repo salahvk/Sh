@@ -21,12 +21,12 @@ router.get('/', async function (req, res) {
   }
 
   productHelper.getAllProducts().then((products) => {
-    res.render('user/view-products', { admin: false, products, user,cartCount });
+    res.render('user/view-products', { admin: false, products, user, cartCount });
   })
   // console .log("3")
   // console.log(sess.user);
 });
- 
+
 router.get('/login', function (req, res) {
   let user = req.session.user
   if (req.session.loggedIn) {
@@ -89,11 +89,10 @@ router.get('/cart', verifyLogin, async (req, res) => {
 
 router.get('/add-to-cart/:id', (req, res) => {
   console.log("api call")
-  // let userId = req.session.user._id;
-  // userHelpers.addToCart(req.params.id, userId).then((response) => {
-  //   res.redirect('/')
-  //   // console.log(response)
-  // })
+  let userId = req.session.user._id;
+  userHelpers.addToCart(req.params.id, userId).then(() => {
+    res.json({ status: true })
+  })
 })
 
 module.exports = router;
