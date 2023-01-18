@@ -8,6 +8,3 @@ $.ajax({
 })
 }
 
-function hello(){
-console.log("hello")
-}
