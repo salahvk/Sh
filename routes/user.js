@@ -23,8 +23,7 @@ router.get('/', async function (req, res) {
   productHelper.getAllProducts().then((products) => {
     res.render('user/view-products', { admin: false, products, user, cartCount });
   })
-  // console .log("3")
-  // console.log(sess.user);
+
 });
 
 router.get('/login', function (req, res) {
@@ -38,15 +37,17 @@ router.get('/login', function (req, res) {
     req.session.loginErr = false;
   }
 
-
+ 
 })
-
+ 
 
 router.post('/login', function (req, res) {
 
   userHelpers.doLogin(req.body).then((response) => {
     if (response.status) {
       req.session.user = response.user
+      console.log("Logged In")
+      console.log(req.session.user)
       req.session.loggedIn = true;
       req.session.save();
       res.redirect('/')
@@ -87,7 +88,7 @@ router.get('/cart', verifyLogin, async (req, res) => {
   res.render('user/cart', { products });
 })
 
-router.get('/add-to-cart/:id', (req, res) => {
+router.get('/add-to-cart/:id',verifyLogin, (req, res) => {
   console.log("api call")
   let userId = req.session.user._id;
   userHelpers.addToCart(req.params.id, userId).then(() => {
