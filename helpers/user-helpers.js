@@ -52,10 +52,12 @@ module.exports = {
                     let proExist = userCart.products.findIndex(product => product.item == proId)
 
                     if (proExist != -1) {
-                        db.get().collection(collection.CART_COLLECTION).updateOne({ 'products.item': ObjectID(proId) }, {
+                        db.get().collection(collection.CART_COLLECTION).updateOne({user:ObjectID(userId), 'products.item': ObjectID(proId) }, {
                             $inc: { 'products.$.quantity': 1 }
-                        }).then(() => {
+                        }).then((response) => {
                             resolve()
+                            console.log("quantity incremented response2")
+                            console.log(response)
                         })
                     } else {
                         db.get().collection(collection.CART_COLLECTION).updateOne(
@@ -66,6 +68,8 @@ module.exports = {
                         }
                         ).then((response) => {
                             resolve()
+                            console.log("quantity incremented response")
+                            console.log(response)
                         })
                     }
                 } else {
@@ -118,8 +122,9 @@ module.exports = {
     changeProductQuantity: (details) => {
         console.log(details);
         console.log("change product quantity")
+        details.count = parseInt(details.count)
         return new Promise(async (resolve, reject) => {
-            details.count = parseInt(details.count)
+         
             db.get().collection(collection.CART_COLLECTION).
                 updateOne({ _id: ObjectID(details.cart), 'products.item': ObjectID(details.product) }, {
                     $inc: { 'products.$.quantity': details.count }
