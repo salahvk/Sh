@@ -83,23 +83,23 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             let cartItems = await db.get().collection(collection.CART_COLLECTION).aggregate([
                 { $match: { user: ObjectID(userId) } },
-                 { $unwind: '$products' }, {
+                { $unwind: '$products' }, {
                     $project: {
                         item: '$products.item',
                         quantity: '$products.quantity'
                     }
                 }, {
                     $lookup: {
-                     
-                        from:collection.PRODUCT_COLLECTION,
-                        localField:'item',
-                        foreignField:'_id',
-                        as:'product'
+
+                        from: collection.PRODUCT_COLLECTION,
+                        localField: 'item',
+                        foreignField: '_id',
+                        as: 'product'
                     }
 
-                },{
-                    $project:{
-                        item:1,quantity:1,product:{$arrayElemAt:['$products',0]}
+                }, {
+                    $project: {
+                        item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
                     }
                 }]).toArray()
             resolve(cartItems)
@@ -113,6 +113,19 @@ module.exports = {
                 count = cart.products.length
             }
             resolve(count)
+        })
+    },
+    changeProductQuantity: (details) => {
+        console.log(details);
+        console.log("change product quantity")
+        return new Promise(async (resolve, reject) => {
+            details.count = parseInt(details.count)
+            db.get().collection(collection.CART_COLLECTION).
+                updateOne({ _id: ObjectID(details.cart), 'products.item': ObjectID(details.product) }, {
+                    $inc: { 'products.$.quantity': details.count }
+                }).then(() => {
+                    resolve()
+                })
         })
     }
 } 

@@ -1,0 +1,46 @@
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {{!-- <link rel="stylesheet" type="text/css" href="styles.css" />  --}}
+    <title>Link CSS to HTML</title>
+</head>
+<form action="/signup" method="post">
+<div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card border-0 shadow rounded-3 my-5">
+          <div class="card-body p-4 p-sm-5">
+            <h5 class="card-title text-center mb-5 fw-light fs-5">Create new account</h5>
+            <form action="/signup" method="post">
+              <div class="form-floating mb-3">
+                <label for="floatingInput">Name </label>
+                <input type="" class="form-control" id="floatingInput" name="Name" placeholder="Enter Name">
+                
+              </div>  
+              <div class="form-floating mb-3">
+                <label for="floatingInput">Email address</label>
+                <input type="email" class="form-control" id="floatingInput" name="Email" placeholder="Enter email">
+                
+              </div>
+              <div class="form-floating mb-3">
+                <label for="floatingPassword">Password</label>
+                <input type="password" class="form-control" id="floatingPassword" name="Password" placeholder="Password">
+                
+              </div>
+
+             
+              <a href="/login">Already have Account</a>
+              <div class="d-grid">
+                <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Signup
+                  </button>
+              </div>
+            
+            
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
