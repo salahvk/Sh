@@ -5,6 +5,7 @@ var productHelper = require('../helpers/product-helpers')
 /* GET home page. */
 router.get('/', function (req, res, next) {
   productHelper.getAllProducts().then((products) => {
+    console.log(products)
     res.render('admin/view-products', { admin: true, products });
   })
 
@@ -21,7 +22,7 @@ router.post('/add-product', function (req, res) {
     const imageName = insertedId
     image.mv('./public/product-images/' + imageName + '.jpg', (err, done) => {
       if (!err) {
-        res.render("admin/view-products")
+        res.redirect("/admin")
         // res.render('admin/add-products')
       } else {
         // console.log(err)

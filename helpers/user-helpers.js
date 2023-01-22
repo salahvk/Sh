@@ -120,11 +120,15 @@ module.exports = {
         })
     },
     changeProductQuantity: (details) => {
+        details.count = parseInt(details.count)
+        details.quantity = parseInt(details.quantity)
         console.log(details);
         console.log("change product quantity")
-        details.count = parseInt(details.count)
+    
         return new Promise(async (resolve, reject) => {
-         
+         if(details.count == -1 && details.quantity == 1){
+            
+         }
             db.get().collection(collection.CART_COLLECTION).
                 updateOne({ _id: ObjectID(details.cart), 'products.item': ObjectID(details.product) }, {
                     $inc: { 'products.$.quantity': details.count }

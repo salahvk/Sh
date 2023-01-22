@@ -21,6 +21,7 @@ router.get('/', async function (req, res) {
   }
 
   productHelper.getAllProducts().then((products) => {
+    console.log(products)
     res.render('user/view-products', { admin: false, products, user, cartCount });
   })
 
@@ -89,7 +90,7 @@ router.get('/cart', verifyLogin, async (req, res) => {
 })
 
 router.get('/add-to-cart/:id',verifyLogin, (req, res) => {
-  console.log("api call")
+  console.log("Add to cart")
   let userId = req.session.user._id;
   userHelpers.addToCart(req.params.id, userId).then(() => {
     res.json({ status: true })
@@ -97,7 +98,9 @@ router.get('/add-to-cart/:id',verifyLogin, (req, res) => {
 })
 
 router.post('/change-product-quantity',(req,res)=>{
-userHelpers.changeProductQuantity(req.body).then(()=>{})
+userHelpers.changeProductQuantity(req.body).then((response)=>{
+res.json(response)
+})
 })
 
 module.exports = router;
