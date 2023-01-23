@@ -46,7 +46,12 @@
       },
       method: 'post',
       success: (response) => {
-        alert(response)
+        if(response.removeProduct){
+          alert("Product Removed from Cart")
+          location.reload()
+        }else{
+          document.getElementById(proId).innerHTML = quantity + count
+        }
       }
     })
   }
