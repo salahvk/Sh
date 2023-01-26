@@ -38,9 +38,9 @@ router.get('/login', function (req, res) {
     req.session.loginErr = false;
   }
 
- 
+
 })
- 
+
 
 router.post('/login', function (req, res) {
 
@@ -89,7 +89,7 @@ router.get('/cart', verifyLogin, async (req, res) => {
   res.render('user/cart', { products });
 })
 
-router.get('/add-to-cart/:id',verifyLogin, (req, res) => {
+router.get('/add-to-cart/:id', verifyLogin, (req, res) => {
   console.log("Add to cart")
   let userId = req.session.user._id;
   userHelpers.addToCart(req.params.id, userId).then(() => {
@@ -97,10 +97,19 @@ router.get('/add-to-cart/:id',verifyLogin, (req, res) => {
   })
 })
 
-router.post('/change-product-quantity',(req,res)=>{
-userHelpers.changeProductQuantity(req.body).then((response)=>{
-res.json(response)
-})
+router.post('/change-product-quantity', (req, res) => {
+  console.log("change")
+  userHelpers.changeProductQuantity(req.body).then((response) => {
+    res.json(response)
+  })
 })
 
+router.post('/remove-product', (req, res) => {
+  console.log("Hi")
+  userHelpers.removeProductFromCart(req.body).then((response) => {
+    console.log("2")
+    console.log(response)
+    res.json(response)
+  })
+})
 module.exports = router;

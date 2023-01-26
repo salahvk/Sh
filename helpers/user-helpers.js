@@ -104,11 +104,11 @@ module.exports = {
 
                 }, {
                     $project: {
-                        item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
+                        item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] } 
                     }
                 }]).toArray()
             resolve(cartItems)
-        })
+        }) 
     },
     getCartCount: (userId) => {
         return new Promise(async (resolve, reject) => {
@@ -144,5 +144,18 @@ module.exports = {
             }
 
         })
+    },
+    removeProductFromCart:(details)=>{ 
+        return new Promise(
+            (resolve,reject)=>{
+                db.get().collection(collection.CART_COLLECTION).updateOne({ _id: ObjectID(details.cart) },
+                { $pull: { products: { item: ObjectID(details.product) } } }
+            ).then((response) => {
+                resolve(response)
+            }).catch((err)=>{
+                reject(err);
+            })
+            }
+        )
     }
 } 
