@@ -1,61 +1,95 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Enter Delivery Details</title>
-    <style>
-      /* Align input fields and add padding */
-      form label {
-        display: inline-block;
-        width: 120px;
-        text-align: right;
-        padding-right: 10px;
-        padding-bottom: 10px;
-      }
-      input[type="text"], input[type="radio"] {
-        padding: 10px;
-        margin-bottom: 10px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-      }
-      /* Add hover effect for inputs */
-      input[type="text"]:hover, input[type="radio"]:hover {
-        border-color: #999;
-      }
-      /* Create a box for the "Total Amount" section */
-      .total-amount {
-        border: 1px solid #ccc;
-        padding: 20px;
-        margin-top: 20px;
-        width: 300px;
-        border-radius: 10px;
-        box-shadow: 2px 2px 5px #ccc;
-      }
-      /* Style the button*/
-      button[type="submit"] {
-        padding: 10px 20px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-    </style>
-  </head>
-  <body>
-    <h1 style="text-align:center">Enter Delivery Details</h1>
-    <form style="margin:0 auto;width:50%;text-align:center">
-      <label>Address: <input type="text" name="address"></label><br>
-      <label>Pincode: <input type="text" name="pincode"></label><br>
-      <label>Mobile: <input type="text" name="mobile"></label><br>
+
+<head>
+  <title>Enter Delivery Details</title>
+  <style>
+    /* Align input fields and add padding */
+      .form2 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+    }
+
+    input[type="text"],
+    input[type="radio"] {
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    /* Add hover effect for inputs */
+    input[type="text"]:hover,
+    input[type="radio"]:hover {
+      border-color: #999;
+    }
+
+    /* Create a box for the "Total Amount" section */
+    .total-amount {
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin-top: 20px;
+      width: 300px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 5px #ccc;
+    }
+
+    /* Style the button*/
+    button[type="submit"] {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .wide-input {
+      width: 500px;
+    }
+h1 {
+  padding-top: 50px; /* add desired value for padding */
+  text-align: center;
+}
+
+
+  </style>
+</head>
+
+<body>
+  
+  <h1 style="text-align:center">Enter Delivery Details</h1>
+  <form class="form2">
+    <label>
+      <span>Address:</span>
+      <input type="text" name="address">
+    </label>
+    <label>
+      <span>Pincode:</span>
+      <input type="text" name="pincode">
+    </label>
+    <label>
+      <span>Mobile:</span>
+      <input type="text" name="mobile">
+    </label>
+  </form>
+  <div class="total-amount" style="margin:0 auto;width:50%;text-align:center">
+    <h2>Total Amount Rs : <span style="color: blue">{{total}}</span></h2>
+    <h3>Payment Method</h3>
+    <form >
+      <input type="radio" name="paymentMethod" value="cod"> COD
+      <input type="radio" name="paymentMethod" value="online"> Online Payment
     </form>
-    <div class="total-amount" style="margin:0 auto;width:50%;text-align:center">
-      <h2>Total Amount</h2>
-      <h3>Payment Method</h3>
-      <form>
-        <input type="radio" name="paymentMethod" value="cod"> COD
-        <input type="radio" name="paymentMethod" value="online"> Online Payment
-      </form>
-      <button type="submit">Checkout</button>
-    </div>
-  </body>
+    <button type="submit">Checkout</button>
+  </div>
+</body>
+
 </html>
